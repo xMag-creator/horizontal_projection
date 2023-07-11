@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def read_datas():
@@ -54,13 +55,20 @@ g = 9.81  # m/s^2
 total_time = ((2 * H_START) / g) ** (1 / 2)
 max_range = V_START * total_time
 
+# calculate additional values for creating the plot
+x_points = np.arange(0, max_range, max_range/100)
+y_points = H_START - ((g / 2) * (x_points / V_START) ** 2)
+
 # generate chart, adding start point and finish point
 title = f"""Horizontal projection chart, V_START = {V_START} [m/s], ( g={g} m/s^2 ), 
         flight time = {round(total_time, 4)} [s]"""
 
 plt.scatter(0, H_START, label=f"H_START={H_START} [m]")
 plt.scatter(max_range, 0, label=f"max_range={round(max_range, 3)} [m]")
+plt.plot(x_points, y_points, marker="+", color="red", label="Throw points.")
 plt.grid()
 plt.title(title)
+plt.xlabel("Distance in [ m ]")
+plt.ylabel("Height in [ m ]")
 plt.legend()
 plt.show()
